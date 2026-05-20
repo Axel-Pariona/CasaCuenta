@@ -18,11 +18,18 @@ function Filters({ session, filters, onFilterChange, onClearFilters }) {
         return
       }
 
-      const { data: categoriesData, error: categoriesError } = await supabase
+      let categoriesQuery = supabase
         .from('categories')
         .select('id, name')
-        .eq('family_id', profileData.family_id)
         .order('name', { ascending: true })
+
+      if (profileData.family_id) {
+        categoriesQuery = categoriesQuery.eq('family_id', profileData.family_id)
+      } else {
+        categoriesQuery = categoriesQuery.is('family_id', null)
+      }
+
+      const { data: categoriesData, error: categoriesError } = await categoriesQuery
 
       if (categoriesError) {
         console.error(categoriesError)

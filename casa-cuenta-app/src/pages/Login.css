@@ -66,3 +66,23 @@
   color: #dc2626;
   font-size: 14px;
 }
+
+.success {
+  color: #15803d;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.switch-mode-button {
+  margin-top: 16px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.switch-mode-button:hover {
+  text-decoration: underline;
+}

@@ -267,3 +267,329 @@
     grid-template-columns: 1fr;
   }
 }
+
+.actions-cell {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.actions-cell button {
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.edit-button {
+  background: #2563eb;
+  color: white;
+}
+
+.delete-button {
+  background: #dc2626;
+  color: white;
+}
+
+.save-button {
+  background: #16a34a;
+  color: white;
+}
+
+.cancel-button {
+  background: #6b7280;
+  color: white;
+}
+
+.expense-table input,
+.expense-table select {
+  width: 100%;
+  min-width: 120px;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+}
+
+.create-family-card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.create-family-card h2 {
+  margin-top: 0;
+  color: #1f2937;
+}
+
+.create-family-card p {
+  color: #6b7280;
+}
+
+.create-family-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 420px;
+}
+
+.create-family-form label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.create-family-form input {
+  padding: 11px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.create-family-form button {
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.create-family-form button:disabled {
+  background: #93c5fd;
+  cursor: not-allowed;
+}
+
+.family-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.invite-code-box {
+  background: #f3f4f6;
+  border: 1px dashed #9ca3af;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 22px;
+  letter-spacing: 1px;
+  text-align: center;
+  margin: 12px 0;
+}
+
+@media (max-width: 900px) {
+  .family-actions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.account-button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.account-card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.account-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.account-header h2 {
+  margin: 0;
+  color: #111827;
+}
+
+.account-header p {
+  margin: 6px 0 0;
+  color: #6b7280;
+}
+
+.account-close-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 10px;
+  background: #6b7280;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.account-info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.account-info-item {
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.account-info-item span {
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.account-info-item strong {
+  color: #111827;
+  font-size: 16px;
+  word-break: break-word;
+}
+
+.account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.account-action-button,
+.account-warning-button,
+.account-danger-button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.account-action-button {
+  background: #2563eb;
+}
+
+.account-warning-button {
+  background: #d97706;
+}
+
+.account-danger-button {
+  background: #dc2626;
+}
+
+@media (max-width: 1000px) {
+  .account-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .header-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .account-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .account-header {
+    flex-direction: column;
+  }
+
+  .account-actions {
+    flex-direction: column;
+  }
+}
+
+.account-inline-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.account-inline-form input {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.account-inline-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.account-save-button,
+.account-cancel-button {
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.account-save-button {
+  background: #16a34a;
+}
+
+.account-cancel-button {
+  background: #6b7280;
+}
+
+.account-save-button:disabled,
+.account-cancel-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.account-password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  max-width: 460px;
+}
+
+.account-password-form h3 {
+  margin: 0 0 8px;
+  color: #111827;
+}
+
+.account-password-form label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.account-password-form input {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 15px;
+}

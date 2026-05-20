@@ -20,7 +20,7 @@ function SummaryCards({ session, refresh }) {
 
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
-        .select('id, family_id, full_name')
+        .select('id, family_id, full_name, role')
         .eq('id', session.user.id)
         .single()
 
@@ -44,7 +44,7 @@ function SummaryCards({ session, refresh }) {
 
       const todayDate = today.toISOString().split('T')[0]
 
-      const { data: expensesData, error: expensesError } = await supabase
+      let expensesQuery = supabase
         .from('expenses')
         .select(`
           id,
@@ -54,7 +54,16 @@ function SummaryCards({ session, refresh }) {
             name
           )
         `)
-        .eq('family_id', profileData.family_id)
+
+      if (profileData.role === 'admin') {
+        // sin filtro por familia ni usuario
+      } else if (profileData.role === 'family_admin') {
+        expensesQuery = expensesQuery.eq('family_id', profileData.family_id)
+      } else {
+        expensesQuery = expensesQuery.eq('user_id', session.user.id)
+      }
+
+      const { data: expensesData, error: expensesError } = await expensesQuery
         .gte('expense_date', firstDayOfMonth)
         .lte('expense_date', lastDayOfMonth)
 

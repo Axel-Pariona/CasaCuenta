@@ -2,11 +2,21 @@ import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { supabase } from '../services/supabaseClient'
 
-function ExpenseTable({ session, refresh, filters }) {
+function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
   const [expenses, setExpenses] = useState([])
   const [profile, setProfile] = useState(null)
+  const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
+  const [editingExpenseId, setEditingExpenseId] = useState(null)
+
+  const [editForm, setEditForm] = useState({
+    expense_date: '',
+    amount: '',
+    category_id: '',
+    description: '',
+    payment_method: '',
+  })
 
   useEffect(() => {
     const loadExpenses = async () => {
@@ -15,7 +25,7 @@ function ExpenseTable({ session, refresh, filters }) {
 
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
-        .select('id, family_id, full_name')
+        .select('id, family_id, full_name, role')
         .eq('id', session.user.id)
         .single()
 
@@ -27,6 +37,28 @@ function ExpenseTable({ session, refresh, filters }) {
 
       setProfile(profileData)
 
+      let categoriesQuery = supabase
+        .from('categories')
+        .select('id, name')
+        .order('name', { ascending: true })
+
+      if (profileData.family_id) {
+        categoriesQuery = categoriesQuery.eq('family_id', profileData.family_id)
+      } else {
+        categoriesQuery = categoriesQuery.is('family_id', null)
+      }
+
+      const { data: categoriesData, error: categoriesError } = await categoriesQuery
+
+      if (categoriesError) {
+        console.error(categoriesError)
+        setErrorMessage('No se pudieron cargar las categorías.')
+        setLoading(false)
+        return
+      }
+
+      setCategories(categoriesData)
+
       let query = supabase
         .from('expenses')
         .select(`
@@ -35,6 +67,7 @@ function ExpenseTable({ session, refresh, filters }) {
           amount,
           description,
           payment_method,
+          category_id,
           categories (
             name
           ),
@@ -42,7 +75,14 @@ function ExpenseTable({ session, refresh, filters }) {
             full_name
           )
         `)
-        .eq('family_id', profileData.family_id)
+
+      if (profileData.role === 'admin') {
+        // sin filtro por familia ni usuario
+      } else if (profileData.role === 'family_admin') {
+        query = query.eq('family_id', profileData.family_id)
+      } else {
+        query = query.eq('user_id', session.user.id)
+      }
 
       if (filters.startDate) {
         query = query.gte('expense_date', filters.startDate)
@@ -82,6 +122,87 @@ function ExpenseTable({ session, refresh, filters }) {
     loadExpenses()
   }, [session.user.id, refresh, filters])
 
+  const handleEditClick = (expense) => {
+    setEditingExpenseId(expense.id)
+
+    setEditForm({
+      expense_date: expense.expense_date,
+      amount: expense.amount,
+      category_id: expense.category_id,
+      description: expense.description || '',
+      payment_method: expense.payment_method,
+    })
+  }
+
+  const handleCancelEdit = () => {
+    setEditingExpenseId(null)
+
+    setEditForm({
+      expense_date: '',
+      amount: '',
+      category_id: '',
+      description: '',
+      payment_method: '',
+    })
+  }
+
+  const handleEditFormChange = (field, value) => {
+    setEditForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }))
+  }
+
+  const handleUpdateExpense = async (expenseId) => {
+    if (Number(editForm.amount) <= 0) {
+      alert('El monto debe ser mayor a 0.')
+      return
+    }
+
+    const { error } = await supabase
+      .from('expenses')
+      .update({
+        expense_date: editForm.expense_date,
+        amount: Number(editForm.amount),
+        category_id: editForm.category_id,
+        description: editForm.description,
+        payment_method: editForm.payment_method,
+      })
+      .eq('id', expenseId)
+
+    if (error) {
+      console.error(error)
+      alert('No se pudo actualizar el gasto.')
+      return
+    }
+
+    setEditingExpenseId(null)
+    onExpenseChanged()
+  }
+
+  const handleDeleteExpense = async (expenseId) => {
+    const confirmDelete = window.confirm(
+      '¿Seguro que deseas eliminar este gasto?'
+    )
+
+    if (!confirmDelete) {
+      return
+    }
+
+    const { error } = await supabase
+      .from('expenses')
+      .delete()
+      .eq('id', expenseId)
+
+    if (error) {
+      console.error(error)
+      alert('No se pudo eliminar el gasto.')
+      return
+    }
+
+    onExpenseChanged()
+  }
+
   if (loading) {
     return <p>Cargando gastos...</p>
   }
@@ -107,18 +228,122 @@ function ExpenseTable({ session, refresh, filters }) {
                 <th>Descripción</th>
                 <th>Método</th>
                 <th>Monto</th>
+                <th>Acciones</th>
               </tr>
             </thead>
 
             <tbody>
               {expenses.map((expense) => (
                 <tr key={expense.id}>
-                  <td>{expense.expense_date}</td>
-                  <td>{expense.profiles?.full_name || 'Sin usuario'}</td>
-                  <td>{expense.categories?.name || 'Sin categoría'}</td>
-                  <td>{expense.description || '-'}</td>
-                  <td>{expense.payment_method}</td>
-                  <td>S/ {Number(expense.amount).toFixed(2)}</td>
+                  {editingExpenseId === expense.id ? (
+                    <>
+                      <td>
+                        <input
+                          type="date"
+                          value={editForm.expense_date}
+                          onChange={(e) =>
+                            handleEditFormChange('expense_date', e.target.value)
+                          }
+                        />
+                      </td>
+
+                      <td>{expense.profiles?.full_name || 'Sin usuario'}</td>
+
+                      <td>
+                        <select
+                          value={editForm.category_id}
+                          onChange={(e) =>
+                            handleEditFormChange('category_id', e.target.value)
+                          }
+                        >
+                          {categories.map((category) => (
+                            <option key={category.id} value={category.id}>
+                              {category.name}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+
+                      <td>
+                        <input
+                          type="text"
+                          value={editForm.description}
+                          onChange={(e) =>
+                            handleEditFormChange('description', e.target.value)
+                          }
+                        />
+                      </td>
+
+                      <td>
+                        <select
+                          value={editForm.payment_method}
+                          onChange={(e) =>
+                            handleEditFormChange('payment_method', e.target.value)
+                          }
+                        >
+                          <option value="Efectivo">Efectivo</option>
+                          <option value="Yape">Yape</option>
+                          <option value="Plin">Plin</option>
+                          <option value="Tarjeta">Tarjeta</option>
+                          <option value="Transferencia">Transferencia</option>
+                          <option value="Otro">Otro</option>
+                        </select>
+                      </td>
+
+                      <td>
+                        <input
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          value={editForm.amount}
+                          onChange={(e) =>
+                            handleEditFormChange('amount', e.target.value)
+                          }
+                        />
+                      </td>
+
+                      <td className="actions-cell">
+                        <button
+                          className="save-button"
+                          onClick={() => handleUpdateExpense(expense.id)}
+                        >
+                          Guardar
+                        </button>
+
+                        <button
+                          className="cancel-button"
+                          onClick={handleCancelEdit}
+                        >
+                          Cancelar
+                        </button>
+                      </td>
+                    </>
+                  ) : (
+                    <>
+                      <td>{expense.expense_date}</td>
+                      <td>{expense.profiles?.full_name || 'Sin usuario'}</td>
+                      <td>{expense.categories?.name || 'Sin categoría'}</td>
+                      <td>{expense.description || '-'}</td>
+                      <td>{expense.payment_method}</td>
+                      <td>S/ {Number(expense.amount).toFixed(2)}</td>
+
+                      <td className="actions-cell">
+                        <button
+                          className="edit-button"
+                          onClick={() => handleEditClick(expense)}
+                        >
+                          Editar
+                        </button>
+
+                        <button
+                          className="delete-button"
+                          onClick={() => handleDeleteExpense(expense.id)}
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </>
+                  )}
                 </tr>
               ))}
             </tbody>
@@ -128,7 +353,17 @@ function ExpenseTable({ session, refresh, filters }) {
 
       {profile && (
         <p className="table-note">
-          Mostrando gastos de la familia del usuario: <strong>{profile.full_name}</strong>
+          {profile.family_id ? (
+            <>
+              Mostrando gastos de la familia del usuario:{' '}
+              <strong>{profile.full_name}</strong>
+            </>
+          ) : (
+            <>
+              Mostrando gastos personales de:{' '}
+              <strong>{profile.full_name}</strong>
+            </>
+          )}
         </p>
       )}
     </div>
@@ -149,6 +384,7 @@ ExpenseTable.propTypes = {
     paymentMethod: PropTypes.string.isRequired,
     search: PropTypes.string.isRequired,
   }).isRequired,
+  onExpenseChanged: PropTypes.func.isRequired,
 }
 
 export default ExpenseTable
