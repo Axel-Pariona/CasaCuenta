@@ -2,7 +2,7 @@ import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { supabase } from '../services/supabaseClient'
 
-function MyAccount({ session, profile, onClose, onProfileUpdated }) {
+function MyAccount({ session, profile, onProfileUpdated }) {
   const familyName = profile.families?.name || 'Sin familia'
 
   const [isEditingName, setIsEditingName] = useState(false)
@@ -63,34 +63,6 @@ function MyAccount({ session, profile, onClose, onProfileUpdated }) {
     setIsEditingName(false)
     setErrorMessage('')
     setSuccessMessage('')
-  }
-
-  const handleLeaveFamily = async () => {
-    const confirmLeave = window.confirm(
-        '¿Seguro que deseas salir de esta familia? Tus gastos anteriores seguirán asociados a esa familia.'
-    )
-
-    if (!confirmLeave) {
-        return
-    }
-
-    setLoading(true)
-    setErrorMessage('')
-    setSuccessMessage('')
-
-    const { error } = await supabase.rpc('leave_my_family')
-
-    if (error) {
-        console.error(error)
-        setErrorMessage(error.message || 'No se pudo salir de la familia.')
-        setLoading(false)
-        return
-    }
-
-    setSuccessMessage('Saliste de la familia correctamente.')
-    setLoading(false)
-
-    onProfileUpdated()
   }
 
   const handleChangePassword = async (e) => {
@@ -249,17 +221,6 @@ function MyAccount({ session, profile, onClose, onProfileUpdated }) {
 
   return (
     <div className="account-card">
-      <div className="account-header">
-        <div>
-          <h2>Mi cuenta</h2>
-          <p>Administra tus datos personales y familiares.</p>
-        </div>
-
-        <button type="button" className="account-close-button" onClick={onClose}>
-          Cerrar
-        </button>
-      </div>
-
       <div className="account-info-grid">
         <div className="account-info-item">
           <span>Nombre</span>
@@ -462,17 +423,6 @@ function MyAccount({ session, profile, onClose, onProfileUpdated }) {
             Cambiar contraseña
         </button>
 
-        {profile.family_id && (
-            <button
-                type="button"
-                className="account-warning-button"
-                onClick={handleLeaveFamily}
-                disabled={loading}
-            >
-                {loading ? 'Procesando...' : 'Salir de familia'}
-            </button>
-        )}
-
         <button
             type="button"
             className="account-danger-button"
@@ -501,7 +451,6 @@ MyAccount.propTypes = {
       name: PropTypes.string,
     }),
   }).isRequired,
-  onClose: PropTypes.func.isRequired,
   onProfileUpdated: PropTypes.func.isRequired,
 }
 

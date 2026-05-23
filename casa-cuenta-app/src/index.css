@@ -16,12 +16,14 @@ html,
 body,
 #root {
   min-height: 100%;
+  width: 100%;
   margin: 0;
 }
 
 body {
   min-width: 320px;
   background: #f4f6f8;
+  overflow-x: hidden;
 }
 
 button,

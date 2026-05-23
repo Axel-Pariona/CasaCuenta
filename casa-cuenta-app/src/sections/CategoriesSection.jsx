@@ -3,7 +3,7 @@ import CategoryManager from '../components/CategoryManager'
 import DashboardSection from '../components/layout/DashboardSection'
 
 function CategoriesSection({ profile }) {
-  const isAdmin = profile.role === 'admin'
+  const isAdmin = profile.system_role === 'admin'
   const isFamilyAdmin = profile.role === 'family_admin'
 
   if (!isAdmin && !isFamilyAdmin) {

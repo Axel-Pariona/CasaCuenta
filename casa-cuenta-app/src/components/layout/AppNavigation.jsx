@@ -21,17 +21,24 @@ function AppNavigation({ activeSection, onSectionChange, profile }) {
     { id: 'admin', label: 'Admin' },
   ]
 
+  const isGlobalAdmin = profile.system_role === 'admin'
+  const isFamilyAdmin = profile.role === 'family_admin'
+
   let menuItems = [...baseItems]
 
-  if (profile.role === 'family_admin') {
+  if (isFamilyAdmin) {
     menuItems = [...baseItems, ...familyAdminItems]
   }
 
-  if (profile.role === 'admin') {
+  if (isGlobalAdmin) {
     menuItems = [
       { id: 'overview', label: 'Resumen global' },
       { id: 'expenses', label: 'Gastos globales' },
-      ...adminItems,
+      { id: 'family', label: 'Familia' },
+      { id: 'categories', label: 'Categorías' },
+      { id: 'analytics', label: 'Gráficas' },
+      { id: 'exports', label: 'Exportaciones' },
+      { id: 'admin', label: 'Admin' },
       { id: 'account', label: 'Mi cuenta' },
     ]
   }
@@ -68,6 +75,7 @@ AppNavigation.propTypes = {
   onSectionChange: PropTypes.func.isRequired,
   profile: PropTypes.shape({
     role: PropTypes.string.isRequired,
+    system_role: PropTypes.string.isRequired,
   }).isRequired,
 }
 

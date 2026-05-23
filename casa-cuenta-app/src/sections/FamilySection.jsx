@@ -24,34 +24,11 @@ function FamilySection({ profile, onFamilyCreated }) {
         </div>
       )}
 
-      {profile.family_id && profile.role === 'family_admin' && (
-        <FamilyPanel profile={profile} />
-      )}
-
-      {profile.family_id && profile.role !== 'family_admin' && (
-        <div className="create-family-card">
-          <h2>Mi familia</h2>
-
-          <p>
-            Perteneces a:{' '}
-            <strong>{profile.families?.name || 'Sin nombre'}</strong>
-          </p>
-
-          <p>
-            Tu rol dentro de esta familia es:{' '}
-            <strong>{profile.role}</strong>
-          </p>
-        </div>
-      )}
-
-      {profile.role === 'admin' && (
-        <div className="create-family-card">
-          <h2>Vista de familias</h2>
-          <p>
-            Próximamente podrás monitorear familias registradas desde el panel
-            de administración global.
-          </p>
-        </div>
+      {profile.family_id && (
+        <FamilyPanel
+          profile={profile}
+          onFamilyUpdated={onFamilyCreated}
+        />
       )}
     </DashboardSection>
   )

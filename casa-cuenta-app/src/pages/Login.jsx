@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { supabase } from '../services/supabaseClient'
 import AuthLayout from '../components/auth/AuthLayout'
-import '../styles/auth.css'
 
 function Login({ onLogin, onGoToRegister, onGoToForgotPassword }) {
   const [email, setEmail] = useState('')

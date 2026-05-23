@@ -86,3 +86,37 @@
 .switch-mode-button:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 600px) {
+  .login-container {
+    min-height: 100dvh;
+    padding: 16px;
+    align-items: flex-start;
+    padding-top: 40px;
+  }
+
+  .login-card {
+    max-width: 100%;
+    padding: 24px 18px;
+    border-radius: 14px;
+  }
+
+  .login-card h1 {
+    font-size: 28px;
+  }
+
+  .login-card p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .login-card input {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .login-card button {
+    width: 100%;
+    font-size: 15px;
+  }
+}
