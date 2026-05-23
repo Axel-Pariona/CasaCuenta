@@ -21,6 +21,7 @@ function Filters({ session, filters, onFilterChange, onClearFilters }) {
       let categoriesQuery = supabase
         .from('categories')
         .select('id, name')
+        .eq('is_active', true)
         .order('name', { ascending: true })
 
       if (profileData.family_id) {
