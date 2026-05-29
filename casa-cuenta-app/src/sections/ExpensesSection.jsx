@@ -15,8 +15,8 @@ function ExpensesSection({
 }) {
   return (
     <DashboardSection
-      title="Gastos"
-      description="Registra, filtra, edita y revisa los gastos registrados."
+      title="Mis gastos"
+      description="Registra, filtra, edita y revisa únicamente tus propios gastos."
     >
       <main className="dashboard-content">
         <ExpenseForm

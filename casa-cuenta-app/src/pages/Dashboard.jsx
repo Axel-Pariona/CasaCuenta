@@ -6,14 +6,16 @@ import AppNavigation from '../components/layout/AppNavigation'
 import DashboardHeader from '../components/layout/DashboardHeader'
 
 import ExpensesSection from '../sections/ExpensesSection'
+import FamilyExpensesSection from '../sections/FamilyExpensesSection'
+import GlobalExpensesSection from '../sections/GlobalExpensesSection'
 import FamilySection from '../sections/FamilySection'
 import CategoriesSection from '../sections/CategoriesSection'
 import AccountSection from '../sections/AccountSection'
 import OverviewSection from '../sections/OverviewSection'
-
 import AnalyticsSection from '../sections/AnalyticsSection'
 import ExportsSection from '../sections/ExportsSection'
 import AdminSection from '../sections/AdminSection'
+
 
 function Dashboard({ session }) {
   const [refresh, setRefresh] = useState(0)
@@ -129,6 +131,14 @@ function Dashboard({ session }) {
             onFilterChange={handleFilterChange}
             onClearFilters={handleClearFilters}
           />
+        )}
+        
+        {activeSection === 'family-expenses' && (
+          <FamilyExpensesSection profile={profile} />
+        )}
+
+        {activeSection === 'global-expenses' && (
+          <GlobalExpensesSection profile={profile} />
         )}
 
         {activeSection === 'family' && (

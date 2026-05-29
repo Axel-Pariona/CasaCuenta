@@ -76,14 +76,7 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
             full_name
           )
         `)
-
-      if (profileData.role === 'admin') {
-        // sin filtro por familia ni usuario
-      } else if (profileData.role === 'family_admin') {
-        query = query.eq('family_id', profileData.family_id)
-      } else {
-        query = query.eq('user_id', session.user.id)
-      }
+        .eq('user_id', session.user.id)
 
       if (filters.startDate) {
         query = query.gte('expense_date', filters.startDate)
@@ -170,6 +163,7 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
         payment_method: editForm.payment_method,
       })
       .eq('id', expenseId)
+      .eq('user_id', session.user.id)
 
     if (error) {
       console.error(error)
@@ -194,6 +188,7 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
       .from('expenses')
       .delete()
       .eq('id', expenseId)
+      .eq('user_id', session.user.id)
 
     if (error) {
       console.error(error)
@@ -354,17 +349,10 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
 
       {profile && (
         <p className="table-note">
-          {profile.family_id ? (
-            <>
-              Mostrando gastos de la familia del usuario:{' '}
-              <strong>{profile.full_name}</strong>
-            </>
-          ) : (
-            <>
-              Mostrando gastos personales de:{' '}
-              <strong>{profile.full_name}</strong>
-            </>
-          )}
+          <>
+            Mostrando solo los gastos registrados por:{' '}
+            <strong>{profile.full_name}</strong>
+          </>
         </p>
       )}
     </div>
