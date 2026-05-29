@@ -25,7 +25,7 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
 
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
-        .select('id, family_id, full_name, role')
+        .select('id, family_id, full_name, role, system_role')
         .eq('id', session.user.id)
         .single()
 
@@ -77,7 +77,7 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
           )
         `)
 
-      if (profileData.role === 'admin') {
+      if (profileData.system_role === 'admin') {
         // sin filtro por familia ni usuario
       } else if (profileData.role === 'family_admin') {
         query = query.eq('family_id', profileData.family_id)

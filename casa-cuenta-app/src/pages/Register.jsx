@@ -2,7 +2,6 @@ import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { supabase } from '../services/supabaseClient'
 import AuthLayout from '../components/auth/AuthLayout'
-import '../styles/auth.css'
 
 function Register({ onLogin, onGoToLogin }) {
   const [fullName, setFullName] = useState('')

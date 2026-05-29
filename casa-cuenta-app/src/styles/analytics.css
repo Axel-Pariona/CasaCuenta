@@ -1,0 +1,155 @@
+.analytics-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.analytics-summary-card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.analytics-summary-card span {
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.analytics-summary-card strong {
+  color: #111827;
+  font-size: 24px;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.analytics-card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  min-width: 0;
+}
+
+.analytics-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.analytics-card-header h2 {
+  margin: 0;
+  color: #1f2937;
+}
+
+.analytics-card-header span {
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+  background: #f3f4f6;
+  padding: 6px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.bar-chart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bar-chart-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bar-chart-label-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.bar-chart-label-row span {
+  color: #374151;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.bar-chart-label-row strong {
+  color: #111827;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.bar-chart-track {
+  width: 100%;
+  height: 12px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bar-chart-fill {
+  height: 100%;
+  background: #2563eb;
+  border-radius: 999px;
+}
+
+@media (max-width: 1200px) {
+  .analytics-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 800px) {
+  .analytics-summary-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .analytics-summary-card {
+    padding: 18px;
+  }
+
+  .analytics-card {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .analytics-card-header {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 420px) {
+  .analytics-summary-card,
+  .analytics-card {
+    padding: 14px;
+  }
+
+  .analytics-summary-card strong {
+    font-size: 22px;
+  }
+
+  .bar-chart-label-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}

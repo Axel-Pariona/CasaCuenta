@@ -1,0 +1,263 @@
+.create-family-card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.create-family-card h2 {
+  margin-top: 0;
+  color: #1f2937;
+}
+
+.create-family-card p {
+  color: #6b7280;
+}
+
+.create-family-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 420px;
+}
+
+.create-family-form label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.create-family-form input {
+  padding: 11px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.create-family-form button {
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.create-family-form button:disabled {
+  background: #93c5fd;
+  cursor: not-allowed;
+}
+
+.family-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.invite-code-box {
+  background: #f3f4f6;
+  border: 1px dashed #9ca3af;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 22px;
+  letter-spacing: 1px;
+  text-align: center;
+  margin: 12px 0;
+}
+
+.family-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.family-info-card,
+.family-members-card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.family-info-card h2,
+.family-members-card h2 {
+  margin-top: 0;
+  color: #1f2937;
+}
+
+.family-info-card p,
+.family-members-card p {
+  color: #6b7280;
+}
+
+.family-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.family-stat-item {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.family-stat-item span {
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.family-stat-item strong {
+  color: #111827;
+  font-size: 20px;
+}
+
+.invite-code-section {
+  margin-top: 16px;
+}
+
+.family-members-table-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.family-members-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+}
+
+.family-members-table th,
+.family-members-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.family-members-table th {
+  background: #f9fafb;
+  color: #374151;
+  font-weight: 700;
+}
+
+.family-members-table td {
+  color: #111827;
+}
+
+.family-danger-zone {
+  padding: 16px;
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  border-radius: 12px;
+}
+
+.family-danger-zone h3 {
+  margin: 0 0 8px;
+  color: #991b1b;
+}
+
+.family-danger-zone p {
+  color: #7f1d1d;
+  margin-bottom: 12px;
+}
+
+.family-danger-button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background: #dc2626;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.family-danger-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.family-warning-button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background: #dc2626;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.family-warning-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .family-actions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .family-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 800px) {
+  .create-family-card {
+    padding: 18px;
+    border-radius: 14px;
+    margin-bottom: 16px;
+  }
+
+  .family-actions-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .create-family-form {
+    max-width: 100%;
+  }
+
+  .invite-code-box {
+    font-size: 18px;
+    word-break: break-word;
+  }
+
+  .family-info-card,
+  .family-members-card {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .family-members-table {
+    min-width: 720px;
+  }
+
+  .family-danger-button {
+    width: 100%;
+  }
+
+  .family-warning-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .create-family-card {
+    padding: 14px;
+  }
+
+  .family-info-card,
+  .family-members-card {
+    padding: 14px;
+  }
+}

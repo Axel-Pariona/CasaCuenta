@@ -12,7 +12,7 @@ function CategoryManager({ profile }) {
   const [successMessage, setSuccessMessage] = useState('')
 
   const canManageCategories =
-    profile.role === 'admin' || profile.role === 'family_admin'
+    profile.system_role === 'admin' || profile.role === 'family_admin'
 
   const loadCategories = async () => {
     setErrorMessage('')
@@ -31,7 +31,7 @@ function CategoryManager({ profile }) {
       .order('is_active', { ascending: false })
       .order('name', { ascending: true })
 
-    if (profile.role === 'admin') {
+    if (profile.system_role === 'admin') {
       query = query.is('family_id', null)
     } else if (profile.role === 'family_admin') {
       query = query.eq('family_id', profile.family_id)
@@ -158,18 +158,6 @@ function CategoryManager({ profile }) {
 
   return (
     <div className="category-manager-card">
-      <h2>
-        {profile.role === 'admin'
-          ? 'Categorías globales'
-          : 'Categorías de mi familia'}
-      </h2>
-
-      <p>
-        {profile.role === 'admin'
-          ? 'Administra las categorías globales usadas por usuarios sin familia.'
-          : 'Administra las categorías disponibles para los miembros de tu familia.'}
-      </p>
-
       <form onSubmit={handleCreateCategory} className="category-form">
         <input
           type="text"
