@@ -6,6 +6,7 @@
 @import './styles/categories.css';
 @import './styles/admin.css';
 @import './styles/analytics.css';
+@import './styles/monitor.css';
 
 .success-message {
   color: #15803d;
