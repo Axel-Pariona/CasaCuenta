@@ -13,6 +13,14 @@ function AppNavigation({ activeSection, onSectionChange, profile }) {
       id: 'expenses',
       label: 'Mis gastos',
     },
+    {
+      id: 'family',
+      label: 'Familia',
+    },
+    {
+      id: 'exports', 
+      label: 'Exportaciones',
+    },
   ]
 
   if (isGlobalAdmin) {
@@ -29,16 +37,10 @@ function AppNavigation({ activeSection, onSectionChange, profile }) {
     })
   }
 
-  menuItems.push({
-    id: 'family',
-    label: 'Familia',
-  })
-
   if (isFamilyAdmin || isGlobalAdmin) {
     menuItems.push(
       { id: 'categories', label: 'Categorías' },
-      { id: 'analytics', label: 'Gráficas' },
-      { id: 'exports', label: 'Exportaciones' }
+      { id: 'analytics', label: 'Gráficas' }
     )
   }
 
