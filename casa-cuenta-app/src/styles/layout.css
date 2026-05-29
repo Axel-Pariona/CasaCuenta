@@ -137,16 +137,73 @@
   overflow-x: hidden;
 }
 
+.loading-screen {
+  min-height: 100dvh;
+  width: 100%;
+  background: #f4f6f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.loading-card {
+  background: white;
+  padding: 28px 32px;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  max-width: 420px;
+  width: 100%;
+}
+
+.loading-spinner {
+  width: 34px;
+  height: 34px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: loading-spin 0.8s linear infinite;
+  flex: 0 0 auto;
+}
+
+.loading-card h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 20px;
+}
+
+.loading-card p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
 
 @media (max-width: 800px) {
   .dashboard-layout {
     display: block;
     min-height: 100dvh;
-    padding-bottom: 88px;
+    padding-bottom: 84px;
   }
 
   .dashboard-main {
-    padding: 14px;
+    padding: 16px;
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
@@ -160,7 +217,6 @@
     bottom: 0;
     top: auto;
     height: auto;
-    padding: 8px;
     z-index: 100;
     border-top: 1px solid #374151;
     border-right: none;
@@ -213,50 +269,13 @@
   }
 }
 
-@media (max-width: 900px) {
-  .dashboard-header {
-    flex-direction: column;
+@media (max-width: 600px) {
+  .loading-card {
+    padding: 22px;
     align-items: flex-start;
-    gap: 12px;
-  }
-}
-
-@media (max-width: 800px) {
-  .dashboard-layout {
-    display: block;
-    padding-bottom: 84px;
   }
 
-  .dashboard-main {
-    padding: 16px;
-  }
-
-  .app-navigation {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: auto;
-    height: auto;
-    padding: 10px;
-    z-index: 50;
-    border-top: 1px solid #374151;
-  }
-
-  .nav-brand {
-    display: none;
-  }
-
-  .nav-items {
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 8px;
-  }
-
-  .nav-item {
-    white-space: nowrap;
-    text-align: center;
-    font-size: 13px;
-    padding: 10px 12px;
+  .loading-card h2 {
+    font-size: 18px;
   }
 }

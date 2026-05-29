@@ -133,8 +133,7 @@ function ExportsSection({ session, profile }) {
 
     const { data, error } = await query
 
-    if (error) {
-      console.error(error)
+    if (error) {      
       setErrorMessage('No se pudieron obtener los datos para exportar.')
       setLoadingType('')
       return

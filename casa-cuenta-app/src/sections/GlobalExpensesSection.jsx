@@ -39,8 +39,7 @@ function GlobalExpensesSection({ profile }) {
         `)
         .order('expense_date', { ascending: false })
 
-      if (error) {
-        console.error(error)
+      if (error) {        
         setErrorMessage('No se pudieron cargar los gastos globales.')
         setLoading(false)
         return

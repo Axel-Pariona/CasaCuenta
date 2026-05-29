@@ -29,7 +29,6 @@ function ForgotPassword({ onGoToLogin }) {
     )
 
     if (error) {
-      console.error(error)
       setErrorMessage(error.message || 'No se pudo enviar el correo de recuperación.')
       setLoading(false)
       return

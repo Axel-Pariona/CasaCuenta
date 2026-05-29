@@ -25,7 +25,6 @@ function FamilyPanel({ profile, onFamilyUpdated }) {
         .single()
 
       if (familyError) {
-        console.error(familyError)
         setErrorMessage('No se pudo cargar la información de la familia.')
         setLoading(false)
         return
@@ -46,7 +45,6 @@ function FamilyPanel({ profile, onFamilyUpdated }) {
         .order('full_name', { ascending: true })
 
       if (membersError) {
-        console.error(membersError)
         setErrorMessage('No se pudieron cargar los miembros de la familia.')
         setLoading(false)
         return
@@ -58,7 +56,6 @@ function FamilyPanel({ profile, onFamilyUpdated }) {
         .eq('family_id', profile.family_id)
 
       if (expensesError) {
-        console.error(expensesError)
         setErrorMessage('No se pudo calcular el gasto por miembro.')
         setLoading(false)
         return
@@ -102,7 +99,6 @@ function FamilyPanel({ profile, onFamilyUpdated }) {
     const { error } = await supabase.rpc('dissolve_my_family')
 
     if (error) {
-      console.error(error)
       setErrorMessage(error.message || 'No se pudo disolver la familia.')
       setLoading(false)
       return
@@ -130,7 +126,6 @@ function FamilyPanel({ profile, onFamilyUpdated }) {
     const { error } = await supabase.rpc('leave_my_family')
 
     if (error) {
-      console.error(error)
       setErrorMessage(error.message || 'No se pudo salir de la familia.')
       setLoading(false)
       return

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { supabase } from '../services/supabaseClient'
 import AuthLayout from '../components/auth/AuthLayout'
-
+import { logError } from '../utils/logger'
 function Login({ onLogin, onGoToRegister, onGoToForgotPassword }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -44,7 +44,7 @@ function Login({ onLogin, onGoToRegister, onGoToForgotPassword }) {
       .single()
 
     if (profileError) {
-      console.error(profileError)
+      logError(profileError)
       sessionStorage.setItem(
         'login_message',
         'No se pudo validar el estado de la cuenta.'

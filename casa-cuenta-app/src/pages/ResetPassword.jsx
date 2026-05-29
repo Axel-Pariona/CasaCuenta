@@ -22,7 +22,6 @@ function ResetPassword() {
         const { error } = await supabase.auth.exchangeCodeForSession(code)
 
         if (error) {
-          console.error(error)
           setErrorMessage(
             'El enlace de recuperación expiró o ya no es válido. Solicita uno nuevo.'
           )
@@ -40,7 +39,6 @@ function ResetPassword() {
       } = await supabase.auth.getSession()
 
       if (sessionError) {
-        console.error(sessionError)
         setErrorMessage('No se pudo validar la sesión de recuperación.')
         setHasRecoverySession(false)
         setCheckingSession(false)
@@ -99,8 +97,7 @@ function ResetPassword() {
       password: newPassword,
     })
 
-    if (error) {
-      console.error(error)
+    if (error) {      
       setErrorMessage(error.message || 'No se pudo actualizar la contraseña.')
       setLoading(false)
       return

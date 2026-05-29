@@ -34,7 +34,6 @@ function CreateFamily({ profile, onFamilyCreated }) {
     )
 
     if (error) {
-      console.error(error)
       setErrorMessage(error.message || 'No se pudo crear la familia.')
       setLoading(false)
       return

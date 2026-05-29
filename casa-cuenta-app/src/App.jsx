@@ -5,6 +5,7 @@ import Register from './pages/Register'
 import ForgotPassword from './pages/ForgotPassword'
 import Dashboard from './pages/Dashboard'
 import ResetPassword from './pages/ResetPassword'
+import LoadingScreen from './components/layout/LoadingScreen'
 import './App.css'
 
 const RECOVERY_DURATION_MS = 15 * 60 * 1000
@@ -115,7 +116,12 @@ function App() {
   }, [])
 
   if (loading) {
-    return <p>Cargando...</p>
+    return (
+      <LoadingScreen
+        title="Cargando CasaCuenta"
+        description="Estamos preparando tu sesión."
+      />
+    )
   }
 
   if (isPasswordRecovery) {

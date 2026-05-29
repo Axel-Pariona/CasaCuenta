@@ -52,7 +52,6 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
       const { data: categoriesData, error: categoriesError } = await categoriesQuery
 
       if (categoriesError) {
-        console.error(categoriesError)
         setErrorMessage('No se pudieron cargar las categorías.')
         setLoading(false)
         return
@@ -103,7 +102,6 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
         .order('created_at', { ascending: false })
 
       if (expensesError) {
-        console.error(expensesError)
         setErrorMessage('No se pudieron cargar los gastos.')
         setLoading(false)
         return
@@ -149,7 +147,7 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
 
   const handleUpdateExpense = async (expenseId) => {
     if (Number(editForm.amount) <= 0) {
-      alert('El monto debe ser mayor a 0.')
+      setErrorMessage('El monto debe ser mayor a 0.')
       return
     }
 
@@ -166,8 +164,7 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
       .eq('user_id', session.user.id)
 
     if (error) {
-      console.error(error)
-      alert('No se pudo actualizar el gasto.')
+      setErrorMessage('No se pudo actualizar el gasto.')
       return
     }
 
@@ -191,8 +188,7 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
       .eq('user_id', session.user.id)
 
     if (error) {
-      console.error(error)
-      alert('No se pudo eliminar el gasto.')
+      setErrorMessage('No se pudo eliminar el gasto.')
       return
     }
 

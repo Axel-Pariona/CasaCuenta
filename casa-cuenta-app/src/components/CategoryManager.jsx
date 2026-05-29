@@ -42,7 +42,6 @@ function CategoryManager({ profile }) {
     const { data, error } = await query
 
     if (error) {
-      console.error(error)
       setErrorMessage('No se pudieron cargar las categorías.')
       return
     }
@@ -67,7 +66,6 @@ function CategoryManager({ profile }) {
     })
 
     if (error) {
-        alert(error.message)
         setErrorMessage(error.message || 'No se pudo crear la categoría.')
         setLoading(false)
         return
@@ -102,7 +100,6 @@ function CategoryManager({ profile }) {
     })
 
     if (error) {
-        alert(error.message)
         setErrorMessage(error.message || 'No se pudo actualizar la categoría.')
         setLoading(false)
         return
@@ -136,7 +133,6 @@ function CategoryManager({ profile }) {
     })
 
     if (error) {
-        alert(error.message)
         setErrorMessage(error.message || 'No se pudo modificar la categoría.')
         setLoading(false)
         return

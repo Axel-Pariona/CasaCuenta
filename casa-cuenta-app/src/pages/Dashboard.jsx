@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import AppNavigation from '../components/layout/AppNavigation'
 import DashboardHeader from '../components/layout/DashboardHeader'
 
+import LoadingScreen from '../components/layout/LoadingScreen'
+
 import ExpensesSection from '../sections/ExpensesSection'
 import FamilyExpensesSection from '../sections/FamilyExpensesSection'
 import GlobalExpensesSection from '../sections/GlobalExpensesSection'
@@ -40,7 +42,6 @@ function Dashboard({ session }) {
       .single()
 
     if (error) {
-      console.error(error)
       setLoadingProfile(false)
       return
     }
@@ -91,11 +92,21 @@ function Dashboard({ session }) {
   }
 
   if (loadingProfile) {
-    return <p>Cargando perfil...</p>
+    return (
+      <LoadingScreen
+        title="Cargando usuario"
+        description="Estamos obteniendo la información de tu cuenta."
+      />
+    )
   }
 
   if (!profile) {
-    return <p>No se pudo cargar el perfil.</p>
+    return (
+      <LoadingScreen
+        title="No se pudo cargar el perfil"
+        description="Intenta cerrar sesión y volver a ingresar."
+      />
+    )
   }
 
   return (

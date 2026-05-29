@@ -37,8 +37,7 @@ function FamilyExpensesSection({ profile }) {
         .eq('family_id', profile.family_id)
         .order('expense_date', { ascending: false })
 
-      if (error) {
-        console.error(error)
+      if (error) {        
         setErrorMessage('No se pudieron cargar los gastos familiares.')
         setLoading(false)
         return

@@ -40,7 +40,6 @@ function SummaryCards({ session, refresh, profile }) {
       const { data, error } = await query
 
       if (error) {
-        console.error(error)
         setErrorMessage('No se pudo cargar el resumen.')
         setLoading(false)
         return
