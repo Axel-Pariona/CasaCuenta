@@ -2,13 +2,21 @@ import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { supabase } from '../services/supabaseClient'
 
+const getTodayDate = () => {
+  const today = new Date()
+
+  const year = today.getFullYear()
+  const month = String(today.getMonth() + 1).padStart(2, '0')
+  const day = String(today.getDate()).padStart(2, '0')
+
+  return `${year}-${month}-${day}`
+}
+
 function ExpenseForm({ session, onExpenseCreated }) {
   const [profile, setProfile] = useState(null)
   const [categories, setCategories] = useState([])
 
-  const [expenseDate, setExpenseDate] = useState(
-    new Date().toISOString().split('T')[0]
-  )
+  const [expenseDate, setExpenseDate] = useState(getTodayDate())
   const [amount, setAmount] = useState('')
   const [categoryId, setCategoryId] = useState('')
   const [description, setDescription] = useState('')
@@ -110,7 +118,7 @@ function ExpenseForm({ session, onExpenseCreated }) {
     setAmount('')
     setDescription('')
     setPaymentMethod('Efectivo')
-    setExpenseDate(new Date().toISOString().split('T')[0])
+    setExpenseDate(getTodayDate())
 
     if (onExpenseCreated) {
       onExpenseCreated()

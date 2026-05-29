@@ -1,0 +1,164 @@
+.category-manager-card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.category-manager-card h2 {
+  margin-top: 0;
+  color: #111827;
+}
+
+.category-manager-card p {
+  color: #6b7280;
+}
+
+.category-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  max-width: 520px;
+}
+
+.category-form input {
+  flex: 1;
+  padding: 11px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.category-form button {
+  padding: 11px 14px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.category-item-disabled {
+  opacity: 0.6;
+}
+
+.category-item div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.category-item span {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.category-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.category-item input {
+  flex: 1;
+  padding: 9px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+}
+
+.category-actions button {
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.category-actions .edit-button {
+  background: #2563eb;
+  color: white;
+}
+
+.category-actions .delete-button {
+  background: #dc2626;
+  color: white;
+}
+
+.category-actions .save-button {
+  background: #16a34a;
+  color: white;
+}
+
+.category-actions .cancel-button {
+  background: #6b7280;
+  color: white;
+}
+
+@media (max-width: 800px) {
+  .category-manager-card {
+    padding: 18px;
+    border-radius: 14px;
+    margin-bottom: 16px;
+  }
+
+  .category-form {
+    flex-direction: column;
+    max-width: 100%;
+  }
+
+  .category-form button {
+    width: 100%;
+  }
+
+  .category-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .category-actions {
+    flex-direction: column;
+  }
+
+  .category-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .category-form {
+    flex-direction: column;
+  }
+
+  .category-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .category-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 420px) {
+  .category-manager-card {
+    padding: 14px;
+  }
+}

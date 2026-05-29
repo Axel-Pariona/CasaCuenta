@@ -35,7 +35,7 @@ function Dashboard({ session }) {
   const loadProfile = useCallback(async () => {
     const { data, error } = await supabase
       .from('profiles')
-      .select('id, family_id, full_name, role, is_active, families (name)')
+      .select('id, family_id, full_name, role, system_role, is_active, families (name)')
       .eq('id', session.user.id)
       .single()
 
@@ -162,7 +162,10 @@ function Dashboard({ session }) {
         )}
 
         {activeSection === 'analytics' && (
-          <AnalyticsSection />
+          <AnalyticsSection
+            session={session}
+            profile={profile}
+          />
         )}
 
         {activeSection === 'exports' && (

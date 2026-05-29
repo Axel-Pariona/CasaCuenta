@@ -15,6 +15,7 @@ function AppNavigation({ activeSection, onSectionChange, profile }) {
     },
   ]
 
+<<<<<<< HEAD
   if (isGlobalAdmin) {
     menuItems.push({
       id: 'global-expenses',
@@ -27,6 +28,41 @@ function AppNavigation({ activeSection, onSectionChange, profile }) {
       id: 'family-expenses',
       label: 'Gastos familiares',
     })
+=======
+  const familyAdminItems = [
+    { id: 'categories', label: 'Categorías' },
+    { id: 'analytics', label: 'Gráficas' },
+    { id: 'exports', label: 'Exportaciones' },
+  ]
+
+  const adminItems = [
+    { id: 'categories', label: 'Categorías' },
+    { id: 'analytics', label: 'Gráficas' },
+    { id: 'exports', label: 'Exportaciones' },
+    { id: 'admin', label: 'Admin' },
+  ]
+
+  const isGlobalAdmin = profile.system_role === 'admin'
+  const isFamilyAdmin = profile.role === 'family_admin'
+
+  let menuItems = [...baseItems]
+
+  if (isFamilyAdmin) {
+    menuItems = [...baseItems, ...familyAdminItems]
+  }
+
+  if (isGlobalAdmin) {
+    menuItems = [
+      { id: 'overview', label: 'Resumen global' },
+      { id: 'expenses', label: 'Gastos globales' },
+      { id: 'family', label: 'Familia' },
+      { id: 'categories', label: 'Categorías' },
+      { id: 'analytics', label: 'Gráficas' },
+      { id: 'exports', label: 'Exportaciones' },
+      { id: 'admin', label: 'Admin' },
+      { id: 'account', label: 'Mi cuenta' },
+    ]
+>>>>>>> fb3ff5bdd1794c39d5c889e838797275bce57a31
   }
 
   menuItems.push({
@@ -92,6 +128,7 @@ AppNavigation.propTypes = {
   onSectionChange: PropTypes.func.isRequired,
   profile: PropTypes.shape({
     role: PropTypes.string.isRequired,
+    system_role: PropTypes.string.isRequired,
   }).isRequired,
 }
 
