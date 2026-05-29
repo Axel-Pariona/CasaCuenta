@@ -169,7 +169,10 @@ function Dashboard({ session }) {
         )}
 
         {activeSection === 'exports' && (
-          <ExportsSection />
+          <ExportsSection
+            session={session}
+            profile={profile}
+          />
         )}
 
         {activeSection === 'admin' && (
