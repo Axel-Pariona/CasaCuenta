@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { supabase } from '../services/supabaseClient'
+import { logError } from '../utils/logger'
 
 function Filters({ session, filters, onFilterChange, onClearFilters }) {
   const [categories, setCategories] = useState([])
@@ -14,7 +15,7 @@ function Filters({ session, filters, onFilterChange, onClearFilters }) {
         .single()
 
       if (profileError) {
-        console.error(profileError)
+        logError(profileError)
         return
       }
 
@@ -33,7 +34,7 @@ function Filters({ session, filters, onFilterChange, onClearFilters }) {
       const { data: categoriesData, error: categoriesError } = await categoriesQuery
 
       if (categoriesError) {
-        console.error(categoriesError)
+        logError(categoriesError)
         return
       }
 

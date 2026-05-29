@@ -5,7 +5,10 @@ import Register from './pages/Register'
 import ForgotPassword from './pages/ForgotPassword'
 import Dashboard from './pages/Dashboard'
 import ResetPassword from './pages/ResetPassword'
+import LoadingScreen from './components/layout/LoadingScreen'
 import './App.css'
+
+const RECOVERY_DURATION_MS = 15 * 60 * 1000
 
 const isRecoveryActive = () => {
   const expiresAt = Number(
@@ -34,30 +37,27 @@ function App() {
 
   useEffect(() => {
     const getSession = async () => {
-      const recoveryActive = isRecoveryActive()
+      const { data } = await supabase.auth.getSession()
 
-      if (window.location.pathname === '/reset-password' && !recoveryActive) {
-        await supabase.auth.signOut()
-        window.history.replaceState({}, '', '/')
-        setIsPasswordRecovery(false)
-        setSession(null)
+      if (window.location.pathname === '/reset-password') {
+        setIsPasswordRecovery(true)
+        setSession(data.session)
         setLoading(false)
         return
       }
 
-      if (recoveryActive) {
+      if (isRecoveryActive()) {
         setIsPasswordRecovery(true)
-        setSession(null)
 
         if (window.location.pathname !== '/reset-password') {
           window.history.replaceState({}, '', '/reset-password')
         }
 
+        setSession(data.session)
         setLoading(false)
         return
       }
 
-      const { data } = await supabase.auth.getSession()
       setSession(data.session)
       setLoading(false)
     }
@@ -70,11 +70,11 @@ function App() {
       if (event === 'PASSWORD_RECOVERY') {
         localStorage.setItem(
           'password_recovery_expires_at',
-          String(Date.now() + 5 * 60 * 1000)
+          String(Date.now() + RECOVERY_DURATION_MS)
         )
 
         setIsPasswordRecovery(true)
-        setSession(null)
+        setSession(currentSession)
 
         if (window.location.pathname !== '/reset-password') {
           window.history.replaceState({}, '', '/reset-password')
@@ -85,7 +85,7 @@ function App() {
 
       if (isRecoveryActive()) {
         setIsPasswordRecovery(true)
-        setSession(null)
+        setSession(currentSession)
 
         if (window.location.pathname !== '/reset-password') {
           window.history.replaceState({}, '', '/reset-password')
@@ -100,7 +100,6 @@ function App() {
     const handleStorageChange = (event) => {
       if (event.key === 'password_recovery_expires_at' && isRecoveryActive()) {
         setIsPasswordRecovery(true)
-        setSession(null)
 
         if (window.location.pathname !== '/reset-password') {
           window.location.href = '/reset-password'
@@ -116,12 +115,17 @@ function App() {
     }
   }, [])
 
-  if (isPasswordRecovery) {
-    return <ResetPassword />
+  if (loading) {
+    return (
+      <LoadingScreen
+        title="Cargando CasaCuenta"
+        description="Estamos preparando tu sesión."
+      />
+    )
   }
 
-  if (loading) {
-    return <p>Cargando...</p>
+  if (isPasswordRecovery) {
+    return <ResetPassword />
   }
 
   if (!session) {

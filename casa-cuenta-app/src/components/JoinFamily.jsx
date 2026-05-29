@@ -30,8 +30,7 @@ function JoinFamily({ profile, onFamilyJoined }) {
       invite_code_input: inviteCode.trim().toUpperCase(),
     })
 
-    if (error) {
-      console.error(error)
+    if (error) {  
       setErrorMessage(error.message || 'No se pudo unir a la familia.')
       setLoading(false)
       return

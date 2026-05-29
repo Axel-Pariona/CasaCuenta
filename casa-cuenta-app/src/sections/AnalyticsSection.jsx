@@ -42,8 +42,7 @@ function AnalyticsSection({ session, profile }) {
         ascending: true,
       })
 
-      if (error) {
-        console.error(error)
+      if (error) {        
         setErrorMessage('No se pudieron cargar los datos para las gráficas.')
         setLoading(false)
         return

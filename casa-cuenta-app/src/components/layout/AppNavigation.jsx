@@ -1,53 +1,72 @@
 import PropTypes from 'prop-types'
 
 function AppNavigation({ activeSection, onSectionChange, profile }) {
-  const baseItems = [
-    { id: 'overview', label: 'Resumen' },
-    { id: 'expenses', label: 'Gastos' },
-    { id: 'family', label: 'Familia' },
-    { id: 'account', label: 'Mi cuenta' },
-  ]
-
-  const familyAdminItems = [
-    { id: 'categories', label: 'Categorías' },
-    { id: 'analytics', label: 'Gráficas' },
-    { id: 'exports', label: 'Exportaciones' },
-  ]
-
-  const adminItems = [
-    { id: 'categories', label: 'Categorías' },
-    { id: 'analytics', label: 'Gráficas' },
-    { id: 'exports', label: 'Exportaciones' },
-    { id: 'admin', label: 'Admin' },
-  ]
-
   const isGlobalAdmin = profile.system_role === 'admin'
   const isFamilyAdmin = profile.role === 'family_admin'
 
-  let menuItems = [...baseItems]
+  const menuItems = [
+    {
+      id: 'overview',
+      label: isGlobalAdmin ? 'Resumen global' : 'Resumen',
+    },
+    {
+      id: 'expenses',
+      label: 'Mis gastos',
+    },
+    {
+      id: 'family',
+      label: 'Familia',
+    },
+    {
+      id: 'exports', 
+      label: 'Exportaciones',
+    },
+  ]
+
+  if (isGlobalAdmin) {
+    menuItems.push({
+      id: 'global-expenses',
+      label: 'Gastos globales',
+    })
+  }
 
   if (isFamilyAdmin) {
-    menuItems = [...baseItems, ...familyAdminItems]
+    menuItems.push({
+      id: 'family-expenses',
+      label: 'Gastos familiares',
+    })
+  }
+
+  if (isFamilyAdmin || isGlobalAdmin) {
+    menuItems.push(
+      { id: 'categories', label: 'Categorías' },
+      { id: 'analytics', label: 'Gráficas' }
+    )
   }
 
   if (isGlobalAdmin) {
-    menuItems = [
-      { id: 'overview', label: 'Resumen global' },
-      { id: 'expenses', label: 'Gastos globales' },
-      { id: 'family', label: 'Familia' },
-      { id: 'categories', label: 'Categorías' },
-      { id: 'analytics', label: 'Gráficas' },
-      { id: 'exports', label: 'Exportaciones' },
-      { id: 'admin', label: 'Admin' },
-      { id: 'account', label: 'Mi cuenta' },
-    ]
+    menuItems.push({
+      id: 'admin',
+      label: 'Admin',
+    })
   }
+
+  menuItems.push({
+    id: 'account',
+    label: 'Mi cuenta',
+  })
 
   return (
     <nav className="app-navigation">
       <div className="nav-brand">
         <strong>CasaCuenta</strong>
-        <span>{profile.role}</span>
+        <span>
+          {isGlobalAdmin
+            ? 'admin global'
+            : isFamilyAdmin
+              ? 'admin familiar'
+              : profile.role}
+        </span>
       </div>
 
       <div className="nav-items">

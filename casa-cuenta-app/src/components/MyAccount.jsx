@@ -44,8 +44,7 @@ function MyAccount({ session, profile, onProfileUpdated }) {
       new_full_name: fullName.trim(),
     })
 
-    if (error) {
-      console.error(error)
+    if (error) {   
       setErrorMessage(error.message || 'No se pudo actualizar el nombre.')
       setLoading(false)
       return
@@ -111,7 +110,6 @@ function MyAccount({ session, profile, onProfileUpdated }) {
     })
 
     if (updateError) {
-        console.error(updateError)
         setErrorMessage(updateError.message || 'No se pudo cambiar la contraseña.')
         setLoading(false)
         return
@@ -177,7 +175,6 @@ function MyAccount({ session, profile, onProfileUpdated }) {
     })
 
     if (updateError) {
-        console.error(updateError)
         setErrorMessage(updateError.message || 'No se pudo cambiar el correo.')
         setLoading(false)
         return
@@ -208,8 +205,7 @@ function MyAccount({ session, profile, onProfileUpdated }) {
 
         const { error } = await supabase.rpc('deactivate_my_account')
 
-        if (error) {
-            console.error(error)
+        if (error) {            
             setErrorMessage(error.message || 'No se pudo desactivar la cuenta.')
             setLoading(false)
             return

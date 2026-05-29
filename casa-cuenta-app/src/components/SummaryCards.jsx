@@ -40,7 +40,6 @@ function SummaryCards({ session, refresh, profile }) {
       const { data, error } = await query
 
       if (error) {
-        console.error(error)
         setErrorMessage('No se pudo cargar el resumen.')
         setLoading(false)
         return
@@ -151,11 +150,6 @@ function SummaryCards({ session, refresh, profile }) {
       (expense) => expense.payment_method || 'Sin método'
     )
 
-    const topUser = getTopItem(
-      currentMonthExpenses,
-      (expense) => expense.profiles?.full_name || 'Sin usuario'
-    )
-
     let comparisonText = 'Sin datos del mes anterior'
 
     if (totalPreviousMonth > 0) {
@@ -180,7 +174,6 @@ function SummaryCards({ session, refresh, profile }) {
       topCategory,
       dailyAverage,
       topPaymentMethod,
-      topUser,
       comparisonText,
     }
   }, [expenses])
@@ -236,16 +229,6 @@ function SummaryCards({ session, refresh, profile }) {
         </strong>
         {summary.topPaymentMethod && (
           <small>{formatCurrency(summary.topPaymentMethod.total)}</small>
-        )}
-      </div>
-
-      <div className="summary-card">
-        <span>Usuario con mayor gasto</span>
-        <strong>
-          {summary.topUser ? summary.topUser.label : 'Sin datos'}
-        </strong>
-        {summary.topUser && (
-          <small>{formatCurrency(summary.topUser.total)}</small>
         )}
       </div>
 

@@ -52,7 +52,6 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
       const { data: categoriesData, error: categoriesError } = await categoriesQuery
 
       if (categoriesError) {
-        console.error(categoriesError)
         setErrorMessage('No se pudieron cargar las categorías.')
         setLoading(false)
         return
@@ -76,14 +75,7 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
             full_name
           )
         `)
-
-      if (profileData.system_role === 'admin') {
-        // sin filtro por familia ni usuario
-      } else if (profileData.role === 'family_admin') {
-        query = query.eq('family_id', profileData.family_id)
-      } else {
-        query = query.eq('user_id', session.user.id)
-      }
+        .eq('user_id', session.user.id)
 
       if (filters.startDate) {
         query = query.gte('expense_date', filters.startDate)
@@ -110,7 +102,6 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
         .order('created_at', { ascending: false })
 
       if (expensesError) {
-        console.error(expensesError)
         setErrorMessage('No se pudieron cargar los gastos.')
         setLoading(false)
         return
@@ -156,7 +147,7 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
 
   const handleUpdateExpense = async (expenseId) => {
     if (Number(editForm.amount) <= 0) {
-      alert('El monto debe ser mayor a 0.')
+      setErrorMessage('El monto debe ser mayor a 0.')
       return
     }
 
@@ -170,10 +161,10 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
         payment_method: editForm.payment_method,
       })
       .eq('id', expenseId)
+      .eq('user_id', session.user.id)
 
     if (error) {
-      console.error(error)
-      alert('No se pudo actualizar el gasto.')
+      setErrorMessage('No se pudo actualizar el gasto.')
       return
     }
 
@@ -194,10 +185,10 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
       .from('expenses')
       .delete()
       .eq('id', expenseId)
+      .eq('user_id', session.user.id)
 
     if (error) {
-      console.error(error)
-      alert('No se pudo eliminar el gasto.')
+      setErrorMessage('No se pudo eliminar el gasto.')
       return
     }
 
@@ -354,17 +345,6 @@ function ExpenseTable({ session, refresh, filters, onExpenseChanged }) {
 
       {profile && (
         <p className="table-note">
-          {profile.family_id ? (
-            <>
-              Mostrando gastos de la familia del usuario:{' '}
-              <strong>{profile.full_name}</strong>
-            </>
-          ) : (
-            <>
-              Mostrando gastos personales de:{' '}
-              <strong>{profile.full_name}</strong>
-            </>
-          )}
         </p>
       )}
     </div>

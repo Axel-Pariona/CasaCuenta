@@ -46,7 +46,6 @@ function AdminSection({ profile }) {
       .order('created_at', { ascending: false })
 
     if (usersError) {
-      console.error(usersError)
       setErrorMessage('No se pudieron cargar los usuarios.')
       setLoading(false)
       return
@@ -65,7 +64,6 @@ function AdminSection({ profile }) {
       .order('created_at', { ascending: false })
 
     if (familiesError) {
-      console.error(familiesError)
       setErrorMessage('No se pudieron cargar las familias.')
       setLoading(false)
       return
@@ -83,7 +81,6 @@ function AdminSection({ profile }) {
       `)
 
     if (expensesError) {
-      console.error(expensesError)
       setErrorMessage('No se pudieron cargar los gastos globales.')
       setLoading(false)
       return
@@ -115,8 +112,7 @@ function AdminSection({ profile }) {
       active_input: nextActiveValue,
     })
 
-    if (error) {
-      console.error(error)
+    if (error) {      
       setErrorMessage(error.message || 'No se pudo actualizar la cuenta.')
       setActionLoadingId('')
       return
